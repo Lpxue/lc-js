@@ -320,6 +320,9 @@
 										if (key*1) {
 											cache_len = key*1 + 1;
 										}
+										if (key*1 == "0") {
+											cache_len = 1;
+										}
 										that[key] = out_cache[key];
 									}
 									while (that[cache_len]) {
@@ -669,9 +672,8 @@
 			lc.prototype.init.prototype = new lc.prototype.node();
 			window.lc = lc;
 		})(window);
-		var a = lc("div span + a");
-		var d= lc("div span").find("span [name=hehe]");
-		var e= lc("div span span[name=hehe]");
+		var d= lc("div span");
+		var e= lc("div span");
 		// var b = lc("div").find("a");
 		// console.log(lc.prototype._getElementsByTagName(da,"p"));
 	</script>
