@@ -23,11 +23,15 @@
 		<span>2</span>
 		<a href=""></a>
 	</div>
+	<div class="1">
+		<span></span>
+		<span name="gh">gg</span>
+	</div>
 	<div></div>
 	<div></div>
 	<div></div>
 	<div></div>
-	<div></div>
+	<p></p>	
 	<script>
 		(function (window) {
 			var lc = function (selector) {
@@ -38,27 +42,36 @@
 					if (!selector) {
 						return this;
 					}
-					var	tools = lc.prototype,
-						that = this,
-						res,i,j;
 					this.selector = [];
 					this.find(selector);
 				},
 				node : function () {
 					this.cache = {};
 					this.animation = function (json,speed,callback) {
-
+						
 					};
 					this.css = function (cssText) {
-						var str = [],i = 0;
-						for (var key in cssText) {
-							str.push(key + ":" + cssText[key]);
+						var str = [],
+							i = 0,
+							arr = arguments;
+						if (typeof cssText === "object") {
+							for (var key in cssText) {
+								str.push(key + ":" + cssText[key]);
+							}
+							str = str.join(";");
+							while (this[i]) {
+								this[i].style.cssText = str;
+								i++;
+							}
+						} else if(arr.length == 2&&typeof arr[0] === "string"&&typeof arr[1] === "string") {
+							while (this[i]) {
+								this[i].style[arr[0]] = arr[1];
+								i++;
+							}
+						} else {
+							throw "can shu cuo wu";
 						}
-						str = str.join(";");
-						while (this[i]) {
-							this[i].style.cssText = str;
-							i++;
-						}
+						
 						return this;
 					};
 					this.back = function () {
@@ -122,7 +135,7 @@
 						}
 						return this;
 					},
-					this.la = function (which) {
+					this.children = function (which) {
 						var i = 0,temp = [],that = this,
 							tools = lc.prototype;
 						while (this[i]) {
@@ -287,6 +300,7 @@
 							return this;
 						}
 						var tools = lc.prototype,doc = [],that = this,res = [],
+							selector = selector.replace(/^\s*|\s*$/g,""),
 							selector = selector.replace(/>/g," > "),
 							selector = selector.replace(/\+/g," + "),
 							selector = selector.replace(/\s*\[\s*/g,"["),
@@ -343,7 +357,7 @@
 								} else if (!that.selector[0]) {
 									doc[0] = document;
 								}
-								that.selector.push(selector.replace(/\s/g,","));
+								that.selector.push(selector.replace(/\s+/g,","));
 								for (count = 0,count_len = doc.length;count < count_len;count++) {
 									temp = null;
 									for (var key in exp_json) {
@@ -491,7 +505,6 @@
 						match_fn();
 						that.cache[keep_selector] = tools.cloneLc(that);
 						return that;
-						// that.cache[the_temp.toString().replace(/,/g,"") + selector_arr.toString().replace(/,/g,"")] = that.clone(that);
 					}
 				},
 				ajax : function () {
@@ -673,7 +686,13 @@
 			window.lc = lc;
 		})(window);
 		var d= lc("div span");
+		var e= lc("div ").find("span");
 		var e= lc("div span");
+		var h=  lc("div");
+		var g = lc("div + div  span").css("color","red");
+		var h = lc("div + div").find("span");         
+		var h = lc("div +div   span[name=gh]");    
+		var h = lc("div +div").find("span[name=gh]");
 		// var b = lc("div").find("a");
 		// console.log(lc.prototype._getElementsByTagName(da,"p"));
 	</script>
